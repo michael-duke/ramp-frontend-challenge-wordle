@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.wordle-game {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-panel {
+  display: flex;
+  flex-direction: column;
+	align-items: center;
+  gap: 10px;
+}
+
+.message {
+  font-size: 18px;
+  color: #333;
+}
+
+.message.lost {
+  color: #da0000;
+}
+
+.message.won {
+  color: #6aaa64;
+}
+
+.play-again-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #6aaa64;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wordle-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 330px;
+}
+
+.wordle-cell {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.wordle-cell.correct {
+  background-color: #6aaa64;
+  color: #fff;
+}
+
+.wordle-cell.present {
+  background-color: #c9b458;
+  color: #fff;
+}
+
+.wordle-cell.absent {
+  background-color: #da0000;
+  color: #fff;
+}
+
+.wordle-input {
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 18px;
+}
