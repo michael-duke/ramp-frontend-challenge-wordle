@@ -1,69 +1,55 @@
-import { useState, useEffect } from "react";
-import WordleGrid from "./components/WordleGrid";
-import WordleInput from "./components/WordleInput";
-import "./index.css";
+import { useState } from 'react';
+import WordleGrid from './components/WordleGrid';
+import WordleInput from './components/WordleInput';
+import './index.css';
 
-const SECRET_WORD = "SPEND";
+export const SECRET_WORD = 'SPEND';
 const MAX_GUESSES = 5;
-
-// returns an array of 'correct', 'present', 'absent' for each char in the guess
-// for example, for 'SPIKE' it would return ['correct', 'present', 'absent', 'absent', 'absent']
-
-export const getGuessStatuses = (guess) => {
-  if (!guess) return [];
-  const upperGuess = guess.toUpperCase();
-  return upperGuess.split("").map((char, idx) => {
-    if (char === SECRET_WORD[idx]) return "correct"; // Green
-    if (SECRET_WORD.includes(char)) return "present"; // Yellow
-    return "absent"; // Red
-  });
-};
 
 export default function WordleGame() {
   const [guesses, setGuesses] = useState([]);
-  const [currentGuess, setCurrentGuess] = useState("");
-  const [gameState, setGameState] = useState("playing"); // 'playing', 'won', 'lost'
-  const [message, setMessage] = useState("");
+  const [currentGuess, setCurrentGuess] = useState('');
+  const [gameState, setGameState] = useState('playing'); // 'playing', 'won', 'lost'
+
 
   const handleInputChange = (e) => {
-    if (gameState !== "playing") return;
+    if (gameState !== 'playing') return;
     // Sanitize input to allow only letters
-    const nextGuess = e.target.value.replace(/[^A-Za-z]/g, "");
+    const nextGuess = e.target.value.replace(/[^A-Za-z]/g, '');
     if (nextGuess.length <= 5) {
       setCurrentGuess(nextGuess);
     }
   };
 
   const handleKeyDown = (e) => {
-    if (gameState !== "playing") return;
-    if (e.key === "Enter" && currentGuess.length === 5) {
+    if (gameState !== 'playing') return;
+    if (e.key === 'Enter' && currentGuess.length === 5) {
       const formattedGuess = currentGuess.toUpperCase();
       const nextGuesses = [...guesses, formattedGuess];
 
       setGuesses(nextGuesses);
-      setCurrentGuess("");
+      setCurrentGuess('');
 
       // Check Win/Loss
-      if (formattedGuess === SECRET_WORD) setGameState("won");
-      else if (nextGuesses.length === MAX_GUESSES) setGameState("lost");
+      if (formattedGuess === SECRET_WORD) setGameState('won');
+      else if (nextGuesses.length === MAX_GUESSES) setGameState('lost');
     }
   };
 
   const handleResetGame = () => {
     setGuesses([]);
-    setCurrentGuess("");
-    setGameState("playing");
+    setCurrentGuess('');
+    setGameState('playing');
   };
 
-  useEffect(() => {
-    if (gameState === "won")
-      setMessage("Congratulations! You've guessed the word!");
-    else if (gameState === "lost")
-      setMessage(`Game Over! The word was ${SECRET_WORD}.`);
-    else setMessage("");
-  }, [gameState]);
+  const message =
+    gameState === 'won'
+      ? "Congratulations! You've guessed the word!"
+      : gameState === 'lost'
+      ? `Game Over! The word was ${SECRET_WORD}.`
+      : '';
 
-  const isInputDisabled = gameState !== "playing";
+  const isInputDisabled = gameState !== 'playing';
   return (
     <div className="wordle-game">
       <WordleGrid guesses={guesses} currentGuess={currentGuess.toUpperCase()} />
@@ -73,7 +59,7 @@ export default function WordleGame() {
         onInputChange={handleInputChange}
         disabled={isInputDisabled}
       />
-      {gameState !== "playing" && (
+      {gameState !== 'playing' && (
         <div className="action-panel">
           <span className={`message ${gameState}`}>{message}</span>
           <button className="play-again-button" onClick={handleResetGame}>
